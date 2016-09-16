@@ -4,6 +4,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.3.1/js/md5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <style>
     body {
@@ -37,6 +40,14 @@
       width:50% !important;
       margin:auto !important;
     }
+    ::selection {
+      background: #4db6ac; /* WebKit/Blink Browsers */
+      color: #fff;
+    }
+    ::-moz-selection {
+      background: #4db6ac; /* Gecko Browsers */
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -50,13 +61,19 @@
   </nav>
   <div class='valign-wrapper' style='  display: flex;flex-flow: column; height:75%'>
     <div class='content'>
-      <h1 class='center-align'>Your Free & Open Link Shortener </h1>
-      <h4> An Open Source Take On Link Shortening </h4>
-      <form class='urlform' action="shorten" method="get">
-        <input class='urlbox cyan lighten-5' style='padding-left:5px' placeholder="http://www.google.com" type="url" name="url">
-        <button style="width:100%; margin-top:10px; grey darken-3; background-color:#424242" class="btn waves-effect waves-light" type="submit" name="action">Link Me</button>
-      </form>
+      <h1 class='center-align'>Your Link is Now Ready</h1>
+      <h4> Get Ready To Share Your Link With The World </h4>
+      <div class='urlform'>
+        <input id='urlbox' class='urlbox cyan lighten-5' style='padding-left:5px' placeholder="http://www.google.com" type="url" name="url" value='test'>
+        <button id='urlbutton' style="width:100%; margin-top:10px; grey darken-3; background-color:#424242" class="btn waves-effect waves-light" name="action" data-clipboard-target="#urlbox">Copy Link</button>
+      </div>
     </div>
   </div>
+  <script>
+    var urlParam = unescape(location.search.split('url=')[1].split('&')[0]);
+    var urlShort = md5(urlParam).substr(0,6)
+    document.getElementById('urlbox').value = 'LinkMe.io/' + urlShort;
+    new Clipboard('#urlbutton');
+  </script>
 </body>
 </html>

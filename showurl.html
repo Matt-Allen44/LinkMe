@@ -76,7 +76,7 @@
   <script>
     var urlParam = unescape(location.search.split('url=')[1].split('&')[0]);
     var urlShort = md5(urlParam).substr(0,6)
-    document.getElementById('urlbox').value = 'LinkMe.io/' + urlShort;
+    document.getElementById('urlbox').value = 'localhost/' + urlShort;
     new Clipboard('#urlbutton');
   </script>
 </body>

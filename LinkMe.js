@@ -37,10 +37,13 @@ linkme.get('/', function(req, res){
 });
 
 linkme.get('*', function(req, res){
-  res.writeHead(301,
-  {Location: shortURLs[req.originalUrl]}
-);
-  res.end();
+  if(shortURLs[req.originalUrl]){
+    res.writeHead(301,
+    {Location: shortURLs[req.originalUrl]}
+    );
+  } else {
+    res.sendFile(__dirname  + '/linkme.html');
+  }
 });
 
 linkme.listen(80, function(){

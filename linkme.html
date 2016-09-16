@@ -8,6 +8,7 @@
   <style>
     body {
       background-image:url("https://newevolutiondesigns.com/images/freebies/city-wallpaper-18.jpg");
+      background-position: center;
     }
     h1 {
       font-size: 4em;
@@ -37,12 +38,15 @@
       width:50% !important;
       margin:auto !important;
     }
+    .biege {
+      background-color: #eaceb8;
+    }
   </style>
 </head>
 <body>
-  <nav class="grey darken-3">
+  <nav class="biege">
     <div style="width:50%; margin:auto;" class="nav-wrapper">
-      <a href="#" class="brand-logo">LinkMe.io</a>
+      <a href="#" class="brand-logo">LinkMe</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="https://github.com/Matt-Allen44/linkme">View on Github</a></li>
       </ul>
@@ -53,7 +57,7 @@
       <h1 class='center-align'>Your Free & Open Link Shortener </h1>
       <h4> An Open Source Take On Link Shortening </h4>
       <form class='urlform' action="shorten" method="get">
-        <input class='urlbox cyan lighten-5' style='padding-left:5px' placeholder="http://www.google.com" type="url" name="url">
+        <input class='urlbox' style='padding-left:5px; background-color:#eadfd6' placeholder="http://www.google.com" type="url" name="url">
         <button style="width:100%; margin-top:10px; grey darken-3; background-color:#424242" class="btn waves-effect waves-light" type="submit" name="action">Link Me</button>
       </form>
     </div>

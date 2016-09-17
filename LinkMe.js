@@ -2,10 +2,17 @@ var crypto = require('crypto');
 var express = require('express');
 var linkme = express();
 
-//Default starter appended to the link eg. http://www.link.me/{HashHere}
-var LINKME_BASE_URL = 'localhost'
+var redis = require('redis');
+var redisClient = redis.createClient(/*PORT*/, /*IP*/);
+    redisClient.auth(/*PASSWORD*/, function(err) {
+        if (err) throw err;
+    });
+redisClient.select(3); // Using DB3 as I'm already using the other on my server
 
-var shortURLs = new Object(); // or var map = {};
+//Default starter appended to the link eg. http://www.link.me/{HashHere}
+var LINKME_BASE_URL = 'localhost';
+
+var shortURLs = {}; // or var map = {};
 
 
 var ShortenLink = function(url){
@@ -15,12 +22,18 @@ var ShortenLink = function(url){
 };
 
 var sendToRedis = function(shortURL, longURL){
-  shortURLs[shortURL] = longURL;
+  redisClient.lpush(shortURL, longURL); // push into redis
 };
 
 var fetchFromRedis = function(shortURL){
-  console.log('FETCHED ' + shortURL + " --> " + shortURLs[shortURL])
-  return shortURLs[shortURL];
+  redisClient.lrange(shortURL, 1, -1, function(err, reply) {
+      if (err) {
+          res.status(422);
+          res.end("Lookup failed for " + shortURL);
+      }
+
+      return reply;
+  });
 };
 
 linkme.get('/shorten', function(req, res){
@@ -51,5 +64,5 @@ linkme.get('*', function(req, res){
 });
 
 linkme.listen(80, function(){
-  console.log('Listening on :80')
+  console.log('Listening on :80');
 });
